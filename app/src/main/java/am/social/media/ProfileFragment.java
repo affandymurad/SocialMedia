@@ -32,6 +32,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import twitter4j.Paging;
 import twitter4j.Query;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -206,13 +207,19 @@ public class ProfileFragment extends Fragment {
 				// TODO Auto-generated method stub
 				List<twitter4j.Status> tweets = new ArrayList();
 				tweetTexts.clear();
-				 
+
+				String userName ="7Langit";
+
+
+
 				 Twitter mTwitter = getTwitter();
 				 try {
-					 
-				 tweets = mTwitter.search(new Query(searchText)).getTweets();
+
+					 Paging page = new Paging (1, 50);//page number, number per page
+				 tweets = mTwitter.getUserTimeline(userName, page);
 				 for (twitter4j.Status t : tweets) {
-					 tweetTexts.add(t.getText() + "\n\n");
+
+					 tweetTexts.add("@" + t.getUser().getScreenName() +"   ("+t.getUser().getName()+")"+"\n"+ t.getText() + "\n\n"+"Created at:"+t.getUser().getCreatedAt());
 					 }
 				 
 				 
